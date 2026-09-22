@@ -1,0 +1,733 @@
+<!doctype html><html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#07080C"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><meta name="apple-mobile-web-app-title" content="ECHO"><title>ECHO</title><style>
+:root{
+  --bg:#07080C;--bg2:#0E1018;--surface:#12141B;--text:#F5F2E9;--muted:#AAA7B3;
+  --faint:#656877;--line:#242736;--violet:#B5A4FF;--blue:#8DB8FF;--green:#9DD7B1;
+}
+*{box-sizing:border-box}
+html,body,#app{margin:0;min-height:100%;background:var(--bg);color:var(--text);
+  font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","SF Pro Text",system-ui,sans-serif}
+body{min-height:100dvh;overscroll-behavior:none}
+button,textarea,input{font:inherit}
+button{cursor:pointer}
+.screen{
+  min-height:100dvh;padding:calc(env(safe-area-inset-top) + 20px) 22px calc(env(safe-area-inset-bottom) + 24px);
+  display:flex;flex-direction:column;position:relative;overflow:hidden;
+  background:
+    radial-gradient(circle at 50% 24%,rgba(148,128,255,.12),transparent 29%),
+    radial-gradient(circle at 80% 78%,rgba(75,114,255,.055),transparent 30%),
+    linear-gradient(180deg,#07080C,#0D0F17 46%,#07080C);
+}
+.wrap{max-width:430px;width:100%;margin:0 auto;min-height:calc(100dvh - env(safe-area-inset-top) - env(safe-area-inset-bottom) - 44px);display:flex;flex-direction:column}
+.logo{font-size:22px;font-weight:900;letter-spacing:7px}
+.kicker{font-size:10px;font-weight:900;letter-spacing:2px;color:var(--violet)}
+.faint{color:var(--faint)} .muted{color:var(--muted)}
+.small{font-size:12px}
+.hero{flex:1;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center}
+.heroOrb{width:210px;height:210px;border-radius:50%;display:grid;place-items:center;position:relative;margin-bottom:34px;background:
+  radial-gradient(circle,rgba(226,221,255,.9) 0 12%,rgba(179,162,255,.18) 13% 30%,rgba(140,123,255,.06) 31% 55%,transparent 56%)}
+.heroOrb:before,.heroOrb:after{content:"";position:absolute;border:1px solid rgba(179,162,255,.18);border-radius:50%}
+.heroOrb:before{inset:22px;animation:pulse 4s ease-in-out infinite}
+.heroOrb:after{inset:2px;animation:pulse 5.6s ease-in-out infinite reverse}
+@keyframes pulse{0%,100%{transform:scale(.96);opacity:.45}50%{transform:scale(1.04);opacity:1}}
+h1{font-size:37px;line-height:1.06;letter-spacing:-1.5px;margin:0;font-weight:820}
+h2{font-size:29px;line-height:1.13;letter-spacing:-1px;margin:0;font-weight:790}
+p{margin:0}
+.hero p{font-size:18px;line-height:1.45;color:var(--muted);max-width:330px;margin-top:14px}
+.cta{
+  min-height:58px;width:100%;border:0;border-radius:19px;background:var(--text);color:var(--bg);
+  font-size:16px;font-weight:800;padding:0 18px;display:flex;align-items:center;justify-content:center;text-decoration:none
+}
+.cta.secondary{background:rgba(245,242,233,.04);border:1px solid rgba(245,242,233,.13);color:var(--text)}
+.cta:disabled{opacity:.38}
+.copyblock{margin:auto 0;display:flex;flex-direction:column;gap:28px}
+.eyebrow{font-size:11px;color:var(--violet);font-weight:900;letter-spacing:1.8px}
+.bigcopy{font-size:31px;line-height:1.16;font-weight:790;letter-spacing:-1px;margin-top:7px}
+.bodycopy{font-size:16px;line-height:1.55;color:var(--muted);margin-top:10px}
+.rule{height:1px;background:linear-gradient(90deg,transparent,var(--line),transparent)}
+.qtop,.row{display:flex;align-items:center;justify-content:space-between}
+.qscene{margin:auto 0;position:relative}
+.qtitle{font-size:34px;line-height:1.14;letter-spacing:-1.2px;font-weight:790}
+.qhint{font-size:15px;line-height:1.5;color:var(--muted);margin-top:14px}
+textarea{
+  width:100%;min-height:166px;border:0;border-top:1px solid rgba(255,255,255,.10);
+  border-bottom:1px solid rgba(255,255,255,.07);background:transparent;color:var(--text);
+  padding:20px 0;font-size:17px;line-height:1.55;resize:none;outline:none;margin-top:22px
+}
+textarea::placeholder{color:#595C6A}
+.confidence{margin-top:18px}
+.confidenceHead{display:flex;justify-content:space-between;color:var(--muted);font-size:12px;margin-bottom:9px}
+input[type=range]{width:100%;accent-color:var(--violet)}
+.birth{align-items:center;justify-content:center;text-align:center}
+.birthNet{position:relative;width:290px;height:290px;margin:0 auto 34px}
+.dot{position:absolute;border-radius:50%;background:#DDD6FF;box-shadow:0 0 24px rgba(190,176,255,.7)}
+.ring{position:absolute;border:1px solid rgba(185,170,255,.13);border-radius:50%}
+.map{position:relative;width:320px;height:330px;margin:12px auto}
+.node{position:absolute;border:1px solid rgba(193,180,255,.52);border-radius:50%;background:rgba(146,127,255,.10);
+  box-shadow:0 0 20px rgba(155,139,255,.25);display:grid;place-items:center;text-align:center;padding:4px}
+.node b{font-size:9px;letter-spacing:.6px}
+.edge{position:absolute;height:1px;background:rgba(159,148,230,.20);transform-origin:left center}
+.insight{padding:18px 0;border-top:1px solid rgba(255,255,255,.09)}
+.insight:last-child{border-bottom:1px solid rgba(255,255,255,.09)}
+.insight .it{font-size:10px;color:var(--blue);font-weight:900;letter-spacing:1.8px}
+.insight .ib{font-size:17px;line-height:1.47;color:var(--text);margin-top:8px}
+.insight .why{font-size:12px;color:var(--faint);margin-top:10px}
+.homeHead{display:flex;justify-content:space-between;align-items:flex-start}
+.navLink{background:none;border:0;color:var(--muted);font-size:11px;font-weight:900;letter-spacing:1.5px;padding:4px}
+.sectionTitle{font-size:35px;font-weight:850;letter-spacing:-1px;margin-top:32px}
+.homeCard{padding:20px 0;border-top:1px solid rgba(255,255,255,.08)}
+.homeCard .tag{font-size:10px;color:var(--blue);font-weight:900;letter-spacing:1.6px}
+.homeCard .title{font-size:22px;line-height:1.3;font-weight:740;margin-top:10px}
+.homeCard .copy{font-size:14px;line-height:1.45;color:var(--muted);margin-top:8px}
+.pill{display:inline-flex;border:1px solid var(--line);border-radius:999px;padding:8px 11px;color:var(--muted);font-size:11px;margin:4px 5px 0 0}
+.timeline{margin-top:30px}
+.timeItem{display:grid;grid-template-columns:34px 1fr;gap:8px;min-height:138px}
+.markerWrap{display:flex;flex-direction:column;align-items:center}
+.marker{width:11px;height:11px;border-radius:50%;background:var(--violet);margin-top:12px;box-shadow:0 0 14px rgba(181,164,255,.55)}
+.tline{width:1px;background:var(--line);flex:1;margin-top:5px}
+.timeBody{padding:8px 0 24px}
+.timeBody .date{font-size:10px;letter-spacing:1.2px;color:var(--faint)}
+.timeBody .title{font-size:21px;font-weight:760;margin-top:6px}
+.timeBody .desc{font-size:14px;line-height:1.45;color:var(--muted);margin-top:7px}
+.thenNow{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:22px}
+.pane{border:1px solid var(--line);border-radius:22px;padding:16px;background:rgba(255,255,255,.025)}
+.pane .date{font-size:10px;letter-spacing:1.2px;color:var(--faint)}
+.pane .quote{font-size:15px;line-height:1.45;margin-top:9px}
+.futureChoices{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:16px}
+.futureChoice{border:1px solid var(--line);border-radius:16px;padding:13px 8px;text-align:center;color:var(--muted);font-size:12px;background:transparent}
+.futureChoice.active{background:var(--text);color:var(--bg);border-color:var(--text);font-weight:800}
+.card{border:1px solid var(--line);border-radius:20px;background:rgba(255,255,255,.025);padding:17px}
+.spacer{flex:1}
+.toast{position:fixed;left:50%;bottom:calc(env(safe-area-inset-bottom) + 22px);transform:translateX(-50%);
+  background:#181A22;border:1px solid var(--line);padding:12px 15px;border-radius:14px;font-size:13px;
+  display:none;z-index:100;max-width:90%;text-align:center}
+.back{background:none;border:0;color:var(--muted);padding:0 0 20px;font-size:13px;text-align:left}
+.notice{font-size:12px;line-height:1.45;color:var(--faint);margin-top:10px}
+
+.selfHero{padding:26px 0 18px}
+.selfHero h1{font-size:42px;letter-spacing:-1.7px}
+.selfSummary{font-size:16px;line-height:1.55;color:var(--muted);margin-top:10px;max-width:360px}
+.metricGrid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:18px 0 28px}
+.metric{border:1px solid var(--line);border-radius:20px;padding:16px;background:rgba(255,255,255,.025)}
+.metric .num{font-size:27px;font-weight:820;letter-spacing:-1px}
+.metric .lab{font-size:10px;color:var(--faint);letter-spacing:1.2px;margin-top:5px}
+.mindRow{padding:18px 0;border-top:1px solid rgba(255,255,255,.08)}
+.mindRowTop{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.mindName{font-size:16px;font-weight:780;letter-spacing:.4px}
+.mindMeta{font-size:11px;color:var(--muted)}
+.bar{height:3px;background:#1b1e28;border-radius:999px;margin-top:11px;overflow:hidden}
+.bar>i{display:block;height:100%;background:linear-gradient(90deg,var(--violet),var(--blue));border-radius:999px}
+.evidence{font-size:13px;line-height:1.5;color:var(--muted);margin-top:9px}
+.shiftCard{border:1px solid rgba(141,184,255,.2);border-radius:20px;padding:17px;margin-top:10px;background:rgba(141,184,255,.035)}
+@media(min-width:700px){.screen{max-width:430px;margin:0 auto;border-left:1px solid #151721;border-right:1px solid #151721}}
+</style></head><body><div id="app"></div><div id="toast" class="toast"></div><script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script><script>
+const APP_VERSION = "0.4.0";
+const SUPABASE_URL = "https://aqrxvzobcswuurswzcvq.supabase.co";
+const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImFxcnh2em9iY3N3dXVyc3d6Y3ZxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTAwMzQzMzcsImV4cCI6MjEwNTYxMDMzN30.ZizSy1RUgu5zL6FjB5eEP4Dd6rMAYCaoi3jmLvHfkgs";
+const sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+let currentUser = null;
+const FIRST_ECHO_IDS = ["self_001","death_001","unknown_001","identity_001","belief_001","continuity_001","control_001","core_001"];
+const DOMAINS = ["SELF","TIME","DEATH","UNKNOWN","CONTROL","FREEDOM","PEOPLE","LOVE","MORALITY","VALUE","RISK","FUTURE"];
+
+let questions = [{"id": "self_001", "domain": "SELF", "text": "Если убрать всё, что другие знают о тебе — что останется?", "hint": "Не роль. Не имя. Не образ. Что останется внутри?", "returnDays": 365}, {"id": "death_001", "domain": "DEATH", "text": "Что страшнее: исчезнуть полностью или прожить жизнь, которая была не твоей?", "hint": "Выбери не красивый ответ. Выбери свой.", "returnDays": 365}, {"id": "unknown_001", "domain": "UNKNOWN", "text": "Если бы можно было узнать одну абсолютную правду о реальности — что бы ты спросил?", "hint": "Один вопрос. Один настоящий ответ.", "returnDays": 540}, {"id": "identity_001", "domain": "SELF", "text": "Что делает человека тем же самым человеком спустя годы?", "hint": "Память? Сознание? Тело? История? Что-то другое?", "returnDays": 365}, {"id": "belief_001", "domain": "UNKNOWN", "text": "Во что ты допускаешь возможность верить, хотя не можешь это доказать?", "hint": "Не обязательно то, что ты готов защищать.", "returnDays": 365}, {"id": "continuity_001", "domain": "SELF", "text": "Если все твои воспоминания заменить другими, но сознание продолжится — это всё ещё ты?", "hint": "Да / нет / не уверен — и почему.", "returnDays": 540}, {"id": "control_001", "domain": "CONTROL", "text": "Насколько твоя жизнь действительно принадлежит тебе?", "hint": "Не насколько ты хочешь так думать. Насколько ты это чувствуешь.", "returnDays": 120}, {"id": "core_001", "domain": "SELF", "text": "Что в себе ты больше всего не хотел бы однажды потерять?", "hint": "Это станет одной из первых точек твоего ECHO.", "returnDays": 365}, {"id": "value_001", "domain": "VALUE", "text": "Что сегодня делает твою жизнь стоящей?", "hint": "Не общий ответ. Именно сегодня.", "returnDays": 180}, {"id": "future_001", "domain": "FUTURE", "text": "Если твоя жизнь продолжится в том же направлении ещё пять лет, ты будешь доволен?", "hint": "Что в ответе хочется изменить уже сейчас?", "returnDays": 180}, {"id": "people_001", "domain": "PEOPLE", "text": "Тебе важнее быть понятым или принятым?", "hint": "И почему именно это?", "returnDays": 240}, {"id": "freedom_001", "domain": "FREEDOM", "text": "Что сегодня означает для тебя свобода?", "hint": "Деньги, время, независимость, выбор — или что-то другое?", "returnDays": 180}];
+let state = loadState();
+
+function defaultState(){
+  return {
+    version: APP_VERSION,
+    createdAt: null,
+    onboardingDone: false,
+    firstEchoDone: false,
+    answers: [],
+    futureEchoes: [],
+    timeline: [],
+    currentFirstIndex: 0
+  };
+}
+function loadState(){
+  try{
+    const raw = localStorage.getItem("echo_alpha_state");
+    if(!raw) return defaultState();
+    return {...defaultState(), ...JSON.parse(raw)};
+  }catch(e){ return defaultState(); }
+}
+function saveState(){
+  localStorage.setItem("echo_alpha_state", JSON.stringify(state));
+}
+async function syncAnswer(rec){
+  if(!currentUser) return;
+  const q=getQuestion(rec.questionId);
+  const {error}=await sb.from("thought_snapshots").insert({
+    user_id:currentUser.id, question_id:rec.questionId, question_text:q.text,
+    domain:rec.domain, raw_answer:rec.text, confidence:rec.confidence
+  });
+  if(error){ console.error("ECHO sync:",error); showToast("Cloud error: "+error.message); }
+  else { showToast("Сохранено в ECHO Cloud"); }
+}
+async function syncFutureEcho(rec){
+  if(!currentUser) return;
+  const {error}=await sb.from("future_echoes").insert({
+    user_id:currentUser.id, message:rec.text, unlock_at:rec.unlockAt
+  });
+  if(error){ console.error("ECHO future sync:",error); showToast("Cloud error: "+error.message); }
+  else { showToast("Future Echo сохранён в ECHO Cloud"); }
+}
+
+async function hydrateFromCloud(){
+  if(!currentUser) return;
+  const {data,error}=await sb.from("thought_snapshots")
+    .select("id,created_at,question_id,domain,raw_answer,confidence")
+    .eq("user_id",currentUser.id).order("created_at",{ascending:true});
+  if(error){showToast("Cloud load error: "+error.message);return;}
+  const cloud=(data||[]).map(x=>({
+    id:x.id, questionId:x.question_id, domain:x.domain, text:x.raw_answer,
+    confidence:Number(x.confidence??70), createdAt:x.created_at, source:"cloud"
+  }));
+  const byFingerprint=new Map();
+  [...cloud,...state.answers].forEach(a=>{
+    const k=[a.questionId,a.text,a.confidence].join("|");
+    if(!byFingerprint.has(k) || a.source==="cloud") byFingerprint.set(k,a);
+  });
+  state.answers=[...byFingerprint.values()].sort((a,b)=>new Date(a.createdAt)-new Date(b.createdAt));
+  if(state.answers.length){
+    state.onboardingDone=true;
+    if(FIRST_ECHO_IDS.every(id=>state.answers.some(a=>a.questionId===id))) state.firstEchoDone=true;
+  }
+  saveState();
+}
+async function migrateLocalToCloud(){
+  if(!currentUser || localStorage.getItem("echo_cloud_migrated_"+currentUser.id)==="1") return;
+  const {data,error}=await sb.from("thought_snapshots")
+    .select("question_id,raw_answer,confidence").eq("user_id",currentUser.id);
+  if(error){showToast("Migration check error: "+error.message);return;}
+  const existing=new Set((data||[]).map(x=>[x.question_id,x.raw_answer,Number(x.confidence??70)].join("|")));
+  const local=[...state.answers];
+  for(const rec of local){
+    const key=[rec.questionId,rec.text,Number(rec.confidence??70)].join("|");
+    if(existing.has(key)) continue;
+    const q=getQuestion(rec.questionId);
+    if(!q) continue;
+    const {error:insertError}=await sb.from("thought_snapshots").insert({
+      user_id:currentUser.id, question_id:rec.questionId, question_text:q.text,
+      domain:rec.domain, raw_answer:rec.text, confidence:Number(rec.confidence??70),
+      created_at:rec.createdAt
+    });
+    if(insertError){showToast("Migration error: "+insertError.message);return;}
+    existing.add(key);
+  }
+  localStorage.setItem("echo_cloud_migrated_"+currentUser.id,"1");
+}
+async function prepareAccount(){
+  await migrateLocalToCloud();
+  await hydrateFromCloud();
+}
+function el(tag, cls="", html=""){
+  const e = document.createElement(tag);
+  if(cls) e.className = cls;
+  if(html) e.innerHTML = html;
+  return e;
+}
+function fmtDate(d){
+  const date = new Date(d);
+  return date.toLocaleDateString("ru-RU",{day:"2-digit",month:"short",year:"numeric"}).toUpperCase();
+}
+function daysBetween(a,b){
+  return Math.floor((new Date(b)-new Date(a))/86400000);
+}
+function showToast(msg){
+  const t=document.getElementById("toast");
+  t.textContent=msg;t.style.display="block";
+  setTimeout(()=>t.style.display="none",1500);
+}
+function go(route, opts={}){
+  render(route, opts);
+  window.scrollTo({top:0,behavior:"instant"});
+  history.replaceState({route},"",`#${route}`);
+}
+function getQuestion(id){ return questions.find(q=>q.id===id); }
+function answersFor(id){ return state.answers.filter(a=>a.questionId===id).sort((a,b)=>new Date(a.createdAt)-new Date(b.createdAt)); }
+function latestAnswer(id){ const a=answersFor(id); return a[a.length-1] || null; }
+
+function saveAnswer(questionId, text, confidence=70, source="normal"){
+  const q=getQuestion(questionId);
+  const rec={
+    id: crypto.randomUUID ? crypto.randomUUID() : `${Date.now()}_${Math.random()}`,
+    questionId, domain:q.domain, text:text.trim(), confidence:Number(confidence),
+    createdAt:new Date().toISOString(), source
+  };
+  state.answers.push(rec);
+  state.timeline.push({
+    id:`ans_${rec.id}`,type:"ANSWER",date:rec.createdAt,domain:q.domain,
+    title:source==="repeat"?"Echo revisited":"Thought saved",
+    desc:q.text
+  });
+  saveState();
+  syncAnswer(rec);
+  return rec;
+}
+
+function domainStats(){
+  const out={};
+  DOMAINS.forEach(d=>out[d]={count:0,avgConfidence:null,last:null});
+  state.answers.forEach(a=>{
+    out[a.domain].count++;
+    out[a.domain].last=a.createdAt;
+  });
+  DOMAINS.forEach(d=>{
+    const arr=state.answers.filter(a=>a.domain===d);
+    if(arr.length) out[d].avgConfidence=Math.round(arr.reduce((s,a)=>s+a.confidence,0)/arr.length);
+  });
+  return out;
+}
+
+function appShell(content){
+  const screen=el("main","screen");
+  const wrap=el("div","wrap");
+  wrap.append(content);
+  screen.append(wrap);
+  return screen;
+}
+
+function authScreen(){
+  const c=el("div"); c.style.display="flex";c.style.flexDirection="column";c.style.minHeight="100%";
+  c.innerHTML=`
+    <div><div class="logo">ECHO</div><div class="faint small" style="letter-spacing:2px;margin-top:8px">YOUR MIND ACROSS TIME</div></div>
+    <div class="copyblock">
+      <div><div class="kicker">PRIVATE ACCOUNT</div><div class="bigcopy">Твоя история должна принадлежать тебе.</div>
+      <div class="bodycopy">Создай аккаунт или войди. Ответы будут связаны с твоим аккаунтом, а не только с этим браузером.</div></div>
+      <div><input id="authEmail" type="email" placeholder="Email" style="width:100%;height:56px;border:1px solid var(--line);border-radius:16px;background:rgba(255,255,255,.03);color:var(--text);padding:0 16px;outline:none">
+      <input id="authPassword" type="password" placeholder="Пароль · минимум 6 символов" style="width:100%;height:56px;border:1px solid var(--line);border-radius:16px;background:rgba(255,255,255,.03);color:var(--text);padding:0 16px;outline:none;margin-top:10px"></div>
+      <div id="authError" class="notice"></div>
+    </div>`;
+  const signUp=el("button","cta","Создать аккаунт");
+  const signIn=el("button","cta secondary","У меня уже есть аккаунт");
+  signIn.style.marginTop="10px";
+  function credentials(){
+    const email=document.getElementById("authEmail").value.trim();
+    const password=document.getElementById("authPassword").value;
+    if(!email || password.length<6){document.getElementById("authError").textContent="Введи email и пароль минимум из 6 символов.";return null;}
+    return {email,password};
+  }
+  signUp.onclick=async()=>{const x=credentials();if(!x)return;signUp.disabled=true;
+    const {data,error}=await sb.auth.signUp(x);signUp.disabled=false;
+    if(error){document.getElementById("authError").textContent=error.message;return;}
+    currentUser=data.user; await prepareAccount(); go(state.onboardingDone?(state.firstEchoDone?"home":"first"):"manifesto");
+  };
+  signIn.onclick=async()=>{const x=credentials();if(!x)return;signIn.disabled=true;
+    const {data,error}=await sb.auth.signInWithPassword(x);signIn.disabled=false;
+    if(error){document.getElementById("authError").textContent="Не удалось войти. Проверь email и пароль.";return;}
+    currentUser=data.user; await prepareAccount(); go(state.onboardingDone?(state.firstEchoDone?"home":"first"):"manifesto");
+  };
+  c.append(signUp,signIn); return appShell(c);
+}
+function welcome(){
+  const c=el("div");
+  c.innerHTML=`
+    <div><div class="logo">ECHO</div><div class="faint small" style="letter-spacing:2px;margin-top:8px">YOUR MIND ACROSS TIME</div></div>
+    <div class="hero">
+      <div class="heroOrb"></div>
+      <h1>Встреться с собой,<br>которым ещё не стал.</h1>
+      <p>ECHO сохраняет не события твоей жизни, а то, как меняется человек внутри неё.</p>
+    </div>`;
+  const b=el("button","cta","Войти");
+  b.onclick=()=>go(currentUser ? (state.onboardingDone ? (state.firstEchoDone?"home":"first") : "manifesto") : "auth");
+  c.append(b);
+  c.style.display="flex";c.style.flexDirection="column";c.style.minHeight="100%";
+  return appShell(c);
+}
+function manifesto(){
+  const c=el("div"); c.style.display="flex";c.style.flexDirection="column";c.style.minHeight="100%";
+  c.innerHTML=`
+    <div class="kicker">BEFORE WE BEGIN</div>
+    <div class="copyblock">
+      <div><div class="eyebrow">01</div><div class="bigcopy">Ты меняешься медленнее, чем замечаешь.</div>
+      <div class="bodycopy">Через несколько лет некоторые сегодняшние убеждения будут казаться тебе чужими. Другие останутся почти неизменными.</div></div>
+      <div class="rule"></div>
+      <div><div class="eyebrow">02</div><div class="bigcopy">ECHO сохраняет эти версии тебя.</div>
+      <div class="bodycopy">Чтобы однажды ты мог увидеть не просто старый текст, а путь между двумя своими состояниями.</div></div>
+    </div>`;
+  const b=el("button","cta secondary","Продолжить");
+  b.onclick=()=>go("privacy"); c.append(b); return appShell(c);
+}
+function privacy(){
+  const c=el("div"); c.style.display="flex";c.style.flexDirection="column";c.style.minHeight="100%";
+  c.innerHTML=`
+    <div class="kicker">ONE RULE</div>
+    <div class="copyblock">
+      <div><div class="bigcopy">ECHO не должен знать тебя лучше тебя самого.</div>
+      <div class="bodycopy">Он может замечать связи, противоречия и изменения. Но последнее слово всегда остаётся за тобой.</div></div>
+      <div class="rule"></div>
+      <div class="bodycopy"><b style="color:var(--text)">Первая сессия — 8 вопросов.</b><br>Ответы в этой Alpha сохраняются только в браузере на этом устройстве.</div>
+    </div>`;
+  const b=el("button","cta","Создать мой первый Echo");
+  b.onclick=()=>{
+    state.onboardingDone=true; if(!state.createdAt) state.createdAt=new Date().toISOString(); saveState(); go("first");
+  };
+  c.append(b); return appShell(c);
+}
+function first(){
+  const idx=state.currentFirstIndex||0;
+  if(idx>=FIRST_ECHO_IDS.length){ go("birth"); return el("div"); }
+  const q=getQuestion(FIRST_ECHO_IDS[idx]);
+  const c=el("div"); c.style.display="flex";c.style.flexDirection="column";c.style.minHeight="100%";
+  c.innerHTML=`
+    <div class="qtop"><div class="kicker">${q.domain}</div><div class="faint small">${String(idx+1).padStart(2,"0")} / 08</div></div>
+    <div class="qscene">
+      <div class="qtitle">${q.text}</div>
+      <div class="qhint">${q.hint}</div>
+      <textarea id="answerBox" placeholder="Твоя мысль..."></textarea>
+      <div class="confidence">
+        <div class="confidenceHead"><span>Насколько уверен в ответе?</span><span id="confidenceValue">70%</span></div>
+        <input id="confidence" type="range" min="0" max="100" value="70">
+      </div>
+    </div>`;
+  const b=el("button","cta secondary",idx===7?"Сохранить первую версию себя":"Продолжить");
+  b.onclick=()=>{
+    const text=document.getElementById("answerBox").value.trim();
+    if(!text){showToast("Оставь хотя бы одну мысль.");return;}
+    const conf=document.getElementById("confidence").value;
+    saveAnswer(q.id,text,conf,"first");
+    state.currentFirstIndex=idx+1;
+    saveState();
+    idx===7 ? go("birth") : go("first");
+  };
+  c.append(b);
+  setTimeout(()=>{
+    const r=document.getElementById("confidence"), v=document.getElementById("confidenceValue");
+    if(r) r.oninput=()=>v.textContent=`${r.value}%`;
+  },0);
+  return appShell(c);
+}
+function birth(){
+  if(!state.firstEchoDone){
+    state.firstEchoDone=true;
+    state.timeline.unshift({id:"first_echo",type:"MILESTONE",date:new Date().toISOString(),title:"First Echo",desc:"Первая сохранённая версия твоих взглядов."});
+    saveState();
+  }
+  const c=el("div");c.className="birth";c.style.minHeight="100%";c.style.display="flex";c.style.flexDirection="column";
+  c.innerHTML=`
+    <div class="birthNet">
+      <div class="ring" style="inset:20px"></div><div class="ring" style="inset:62px"></div>
+      <div class="dot" style="width:16px;height:16px;left:137px;top:40px"></div>
+      <div class="dot" style="width:11px;height:11px;left:70px;top:108px"></div>
+      <div class="dot" style="width:10px;height:10px;left:205px;top:102px"></div>
+      <div class="dot" style="width:9px;height:9px;left:92px;top:202px"></div>
+      <div class="dot" style="width:13px;height:13px;left:198px;top:197px"></div>
+      <div class="dot" style="width:8px;height:8px;left:142px;top:248px"></div>
+    </div>
+    <div class="kicker">FIRST ECHO CREATED</div>
+    <h1 style="margin-top:14px">Первая версия тебя сохранена.</h1>
+    <p class="muted" style="font-size:16px;line-height:1.5;max-width:315px;margin:14px auto 0">Сейчас она почти ничего не значит. Именно время сделает её ценной.</p>`;
+  const sp=el("div","spacer");c.append(sp);
+  const b=el("button","cta secondary","Посмотреть первую карту");b.onclick=()=>go("result");c.append(b);
+  return appShell(c);
+}
+function mapHTML(){
+  const stats=domainStats();
+  const sizes = d => Math.min(64, 34 + stats[d].count*6);
+  const node=(d,left,top)=>`<button class="node" data-domain="${d}" style="width:${sizes(d)}px;height:${sizes(d)}px;left:${left}px;top:${top}px"><b>${d}</b></button>`;
+  return `<div class="map">
+    <div class="edge" style="width:100px;left:101px;top:105px;transform:rotate(28deg)"></div>
+    <div class="edge" style="width:108px;left:149px;top:101px;transform:rotate(152deg)"></div>
+    <div class="edge" style="width:120px;left:94px;top:190px;transform:rotate(-28deg)"></div>
+    <div class="edge" style="width:113px;left:157px;top:190px;transform:rotate(28deg)"></div>
+    ${node("SELF",126,58)}${node("UNKNOWN",60,138)}${node("CONTROL",218,137)}
+    ${node("DEATH",82,228)}${node("FUTURE",205,223)}${node("VALUE",134,288)}
+  </div>`;
+}
+function result(){
+  const c=el("div");
+  const stats=domainStats();
+  c.innerHTML=`
+    <div class="kicker">YOUR FIRST ECHO · TODAY</div>
+    <h1 style="font-size:34px;margin-top:18px">Не «кто ты».<br>А откуда начинается твоя история.</h1>
+    <p class="muted" style="font-size:16px;line-height:1.5;margin-top:9px">Карта строится из твоих реальных ответов. Сейчас она только начинается.</p>
+    ${mapHTML()}
+    <div class="insight"><div class="it">SELF</div><div class="ib">Ты уже оставил ${stats.SELF.count} ответа в теме идентичности.</div><div class="why">По мере повторных ответов здесь появится движение во времени.</div></div>
+    <div class="insight"><div class="it">UNKNOWN</div><div class="ib">Неизвестность уже появилась в ${stats.UNKNOWN.count} твоих ответах.</div><div class="why">ECHO пока ничего не считает постоянной чертой.</div></div>
+    <div class="insight"><div class="it">MOVEMENT</div><div class="ib">Пока пусто. Для изменения нужны хотя бы две версии одного ответа.</div></div>`;
+  const b=el("button","cta","Открыть SELF"); b.onclick=()=>go("home"); c.append(b);
+  setTimeout(()=>document.querySelectorAll(".node").forEach(n=>n.onclick=()=>go("domain",{domain:n.dataset.domain})),0);
+  return appShell(c);
+}
+
+function selfModel(){
+  const stats=domainStats();
+  const explored=DOMAINS.filter(d=>stats[d].count>0);
+  const all=state.answers;
+  const avg=all.length?Math.round(all.reduce((n,a)=>n+Number(a.confidence||0),0)/all.length):0;
+  const ranked=explored.slice().sort((a,b)=>stats[b].count-stats[a].count || (stats[b].avgConfidence||0)-(stats[a].avgConfidence||0));
+  const strongest=ranked[0]||null;
+  const uncertain=explored.slice().filter(d=>stats[d].avgConfidence!==null).sort((a,b)=>stats[a].avgConfidence-stats[b].avgConfidence)[0]||null;
+  const repeated=[...new Set(all.map(a=>a.questionId))].filter(id=>answersFor(id).length>1);
+  let shifts=[];
+  repeated.forEach(id=>{
+    const arr=answersFor(id), a=arr[arr.length-2], b=arr[arr.length-1], q=getQuestion(id);
+    if(q) shifts.push({domain:q.domain,q:q.text,delta:b.confidence-a.confidence,old:a,new:b});
+  });
+  shifts.sort((a,b)=>Math.abs(b.delta)-Math.abs(a.delta));
+  return {stats,explored,avg,ranked,strongest,uncertain,repeated,shifts};
+}
+function domainEvidence(d){
+  const arr=state.answers.filter(a=>a.domain===d).sort((a,b)=>new Date(b.createdAt)-new Date(a.createdAt));
+  if(!arr.length) return "";
+  const a=arr[0], q=getQuestion(a.questionId);
+  return q?`Последняя точка: «${escapeHTML(q.text)}»`:"";
+}
+function home(){
+  const m=selfModel();
+  const days=state.createdAt?Math.max(1,daysBetween(state.createdAt,new Date())):1;
+  const c=el("div");
+  const focus=m.strongest?`${m.strongest} сейчас занимает больше всего места в твоей карте.`:"Карта только начинает формироваться.";
+  const uncertainty=m.uncertain?`Самая низкая средняя уверенность сейчас в ${m.uncertain}: ${m.stats[m.uncertain].avgConfidence}%.`:"Для оценки уверенности пока мало данных.";
+  c.innerHTML=`
+    <div class="homeHead">
+      <div><div class="logo" style="font-size:19px">ECHO</div><div class="faint small" style="letter-spacing:1.2px;margin-top:6px">ECHO AGE · DAY ${days}</div></div>
+      <button id="timelineBtn" class="navLink">TIMELINE</button>
+    </div>
+    <div class="selfHero">
+      <div class="kicker">SELF · NOW</div>
+      <h1>Текущая версия тебя.</h1>
+      <div class="selfSummary">Не диагноз и не тип личности. Картина строится только из того, что ты сам оставил в ECHO.</div>
+    </div>
+    <div class="metricGrid">
+      <div class="metric"><div class="num">${m.explored.length}<span class="faint" style="font-size:15px"> / 12</span></div><div class="lab">ОБЛАСТЕЙ ИССЛЕДОВАНО</div></div>
+      <div class="metric"><div class="num">${m.avg}%</div><div class="lab">СРЕДНЯЯ УВЕРЕННОСТЬ</div></div>
+      <div class="metric"><div class="num">${state.answers.length}</div><div class="lab">СОХРАНЁННЫХ МЫСЛЕЙ</div></div>
+      <div class="metric"><div class="num">${m.repeated.length}</div><div class="lab">ВОПРОСОВ ВО ВРЕМЕНИ</div></div>
+    </div>
+
+    <div class="kicker">WHAT ECHO CAN SAY</div>
+    <div class="insight"><div class="it">FOCUS</div><div class="ib">${focus}</div><div class="why">Основано на количестве твоих ответов по областям.</div></div>
+    <div class="insight"><div class="it">UNCERTAINTY</div><div class="ib">${uncertainty}</div><div class="why">Основано только на выставленной тобой уверенности.</div></div>
+
+    <div style="margin-top:30px"><div class="kicker">YOUR MIND MAP</div>
+      <h2 style="margin-top:9px">Где сейчас находятся твои мысли.</h2>
+      <div id="mindRows" style="margin-top:14px"></div>
+    </div>
+
+    <div style="margin-top:30px"><div class="kicker">MOVEMENT</div>
+      <h2 style="margin-top:9px">${m.shifts.length?"Что уже начало меняться.":"Изменения появятся со временем."}</h2>
+      <div id="shiftRows"></div>
+    </div>
+
+    <div class="homeCard" style="margin-top:32px">
+      <div class="tag">NEXT QUESTION</div><div class="title">Оставить ещё одну точку сегодняшнего себя.</div>
+      <div class="copy">Каждый ответ делает будущие сравнения точнее.</div>
+      <button id="newQuestionBtn" class="cta secondary" style="margin-top:16px">Новый вопрос</button>
+    </div>
+    <div class="homeCard"><div class="tag">REVISIT</div><div class="title">Сравнить себя с прошлой версией.</div>
+      <button id="revisitBtn" class="cta secondary" style="margin-top:16px">Открыть Echo</button></div>
+    <div class="homeCard"><div class="tag">FUTURE ECHO</div><div class="title">Сообщение будущему себе.</div>
+      <div class="copy">${state.futureEchoes.filter(x=>!x.openedAt).length} закрытых сообщений.</div>
+      <button id="futureBtn" class="cta secondary" style="margin-top:16px">Создать Future Echo</button></div>`;
+
+  const rows=c.querySelector("#mindRows");
+  m.ranked.forEach(d=>{
+    const st=m.stats[d], row=el("button","mindRow");
+    row.style.cssText="width:100%;background:none;border-left:0;border-right:0;border-bottom:0;color:var(--text);text-align:left";
+    row.innerHTML=`<div class="mindRowTop"><div class="mindName">${d}</div><div class="mindMeta">${st.count} thoughts · ${st.avgConfidence}% confidence</div></div>
+      <div class="bar"><i style="width:${st.avgConfidence||0}%"></i></div><div class="evidence">${domainEvidence(d)}</div>`;
+    row.onclick=()=>go("domain",{domain:d}); rows.append(row);
+  });
+  DOMAINS.filter(d=>!m.explored.includes(d)).slice(0,3).forEach(d=>{
+    const row=el("div","mindRow");row.innerHTML=`<div class="mindRowTop"><div class="mindName faint">${d}</div><div class="mindMeta">UNEXPLORED</div></div>`;
+    rows.append(row);
+  });
+  const shifts=c.querySelector("#shiftRows");
+  if(!m.shifts.length) shifts.innerHTML=`<div class="evidence" style="margin-top:12px">Когда ты ответишь на один и тот же вопрос в разные моменты жизни, здесь появится реальный THEN → NOW.</div>`;
+  m.shifts.slice(0,3).forEach(x=>{
+    const card=el("div","shiftCard");
+    card.innerHTML=`<div class="it">${x.domain} · CONFIDENCE ${x.delta>0?"+":""}${x.delta}</div><div class="ib" style="margin-top:8px">${escapeHTML(x.q)}</div><div class="why">${fmtDate(x.old.createdAt)} → ${fmtDate(x.new.createdAt)}</div>`;
+    shifts.append(card);
+  });
+  setTimeout(()=>{
+    document.getElementById("timelineBtn").onclick=()=>go("timeline");
+    document.getElementById("newQuestionBtn").onclick=()=>go("new-question");
+    document.getElementById("futureBtn").onclick=()=>go("future");
+    document.getElementById("revisitBtn").onclick=()=>go("revisit");
+  },0);
+  return appShell(c);
+}
+function chooseNextQuestion(){
+  const stats=domainStats();
+  const candidates=questions.filter(q=>!FIRST_ECHO_IDS.includes(q.id));
+  return candidates.sort((a,b)=>stats[a.domain].count-stats[b.domain].count)[0] || questions[8];
+}
+function questionScreen(q, source="normal"){
+  const c=el("div");c.style.display="flex";c.style.flexDirection="column";c.style.minHeight="100%";
+  c.innerHTML=`
+    <button class="back">← SELF</button>
+    <div class="qtop"><div class="kicker">${q.domain}</div><div class="faint small">NEW THOUGHT</div></div>
+    <div class="qscene">
+      <div class="qtitle">${q.text}</div><div class="qhint">${q.hint}</div>
+      <textarea id="answerBox" placeholder="Твоя мысль..."></textarea>
+      <div class="confidence"><div class="confidenceHead"><span>Уверенность</span><span id="confidenceValue">70%</span></div>
+      <input id="confidence" type="range" min="0" max="100" value="70"></div>
+    </div>`;
+  const b=el("button","cta","Сохранить");b.onclick=()=>{
+    const txt=document.getElementById("answerBox").value.trim();
+    if(!txt){showToast("Оставь хотя бы одну мысль.");return;}
+    saveAnswer(q.id,txt,document.getElementById("confidence").value,source);
+    showToast("Сохранено.");
+    setTimeout(()=>go("home"),450);
+  };c.append(b);
+  setTimeout(()=>{
+    document.querySelector(".back").onclick=()=>go("home");
+    const r=document.getElementById("confidence"),v=document.getElementById("confidenceValue");
+    r.oninput=()=>v.textContent=`${r.value}%`;
+  },0);
+  return appShell(c);
+}
+function revisit(){
+  const candidates=[...new Set(state.answers.map(a=>a.questionId))].filter(id=>answersFor(id).length>=1);
+  const c=el("div");
+  c.innerHTML=`<button class="back">← SELF</button><div class="kicker">REVISIT</div><h1 style="font-size:34px;margin-top:18px">Какой вопрос вернуть?</h1>
+  <p class="muted" style="font-size:15px;line-height:1.5;margin-top:10px">Старый ответ будет скрыт, пока ты не ответишь заново.</p><div id="list" style="margin-top:24px"></div>`;
+  const list=c.querySelector("#list");
+  candidates.slice(0,8).forEach(id=>{
+    const q=getQuestion(id), count=answersFor(id).length;
+    const card=el("button","card");
+    card.style.cssText="width:100%;text-align:left;color:var(--text);margin-bottom:10px";
+    card.innerHTML=`<div class="kicker">${q.domain}</div><div style="font-size:17px;line-height:1.4;margin-top:8px">${q.text}</div><div class="faint small" style="margin-top:8px">${count} сохранённая версия</div>`;
+    card.onclick=()=>go("repeat",{id});
+    list.append(card);
+  });
+  setTimeout(()=>document.querySelector(".back").onclick=()=>go("home"),0);
+  return appShell(c);
+}
+function repeat(id){
+  const q=getQuestion(id);
+  const old=latestAnswer(id);
+  const c=el("div");c.style.display="flex";c.style.flexDirection="column";c.style.minHeight="100%";
+  c.innerHTML=`<button class="back">← Назад</button><div class="kicker">BEFORE YOU LOOK BACK</div>
+  <div class="qscene"><div class="qtitle">${q.text}</div><div class="qhint">Ответь так, как думаешь сегодня. Старый ответ пока скрыт.</div>
+  <textarea id="answerBox" placeholder="Сегодня я думаю..."></textarea>
+  <div class="confidence"><div class="confidenceHead"><span>Уверенность</span><span id="confidenceValue">70%</span></div>
+  <input id="confidence" type="range" min="0" max="100" value="70"></div></div>`;
+  const b=el("button","cta","Открыть THEN / NOW");b.onclick=()=>{
+    const txt=document.getElementById("answerBox").value.trim();
+    if(!txt){showToast("Сначала ответь заново.");return;}
+    const fresh=saveAnswer(id,txt,document.getElementById("confidence").value,"repeat");
+    go("compare",{id,oldId:old.id,newId:fresh.id});
+  };c.append(b);
+  setTimeout(()=>{
+    document.querySelector(".back").onclick=()=>go("revisit");
+    const r=document.getElementById("confidence"),v=document.getElementById("confidenceValue");r.oninput=()=>v.textContent=`${r.value}%`;
+  },0);
+  return appShell(c);
+}
+function compare(opts){
+  const q=getQuestion(opts.id);
+  const old=state.answers.find(a=>a.id===opts.oldId);
+  const fresh=state.answers.find(a=>a.id===opts.newId);
+  const delta=fresh.confidence-old.confidence;
+  const c=el("div");
+  c.innerHTML=`<div class="kicker">THEN / NOW</div><h1 style="font-size:34px;margin-top:18px">${q.text}</h1>
+  <div class="thenNow">
+    <div class="pane"><div class="date">THEN · ${fmtDate(old.createdAt)}</div><div class="quote">${escapeHTML(old.text)}</div><div class="faint small" style="margin-top:12px">Confidence ${old.confidence}%</div></div>
+    <div class="pane"><div class="date">NOW · ${fmtDate(fresh.createdAt)}</div><div class="quote">${escapeHTML(fresh.text)}</div><div class="faint small" style="margin-top:12px">Confidence ${fresh.confidence}%</div></div>
+  </div>
+  <div class="insight" style="margin-top:24px"><div class="it">CONFIDENCE SHIFT</div><div class="ib">${delta===0?"Твоя уверенность не изменилась.":`Уверенность изменилась на ${delta>0?"+":""}${delta} пунктов.`}</div>
+  <div class="why">ECHO не решает за тебя, означает ли это изменение позиции.</div></div>
+  <div class="insight"><div class="it">YOUR CALL</div><div class="ib">Ты чувствуешь, что изменился?</div>
+  <div style="display:flex;gap:8px;margin-top:12px"><button class="futureChoice" data-feel="YES">Да</button><button class="futureChoice" data-feel="NO">Почти нет</button><button class="futureChoice" data-feel="UNSURE">Не уверен</button></div></div>`;
+  const b=el("button","cta","Сохранить в Timeline");b.onclick=()=>{
+    state.timeline.unshift({id:`shift_${Date.now()}`,type:"SHIFT",date:new Date().toISOString(),domain:q.domain,title:`${q.domain}: revisited`,desc:q.text});
+    saveState();go("timeline");
+  };c.append(b);
+  setTimeout(()=>document.querySelectorAll("[data-feel]").forEach(x=>x.onclick=()=>{
+    document.querySelectorAll("[data-feel]").forEach(y=>y.classList.remove("active"));x.classList.add("active");
+  }),0);
+  return appShell(c);
+}
+function domain(opts){
+  const d=opts.domain, stats=domainStats()[d];
+  const arr=state.answers.filter(a=>a.domain===d).sort((a,b)=>new Date(b.createdAt)-new Date(a.createdAt));
+  const c=el("div");
+  c.innerHTML=`<button class="back">← SELF</button><div class="kicker">${d}</div><h1 style="font-size:36px;margin-top:18px">${d}</h1>
+  <p class="muted" style="font-size:16px;line-height:1.5;margin-top:10px">${stats.count} ответов · ${stats.avgConfidence??"—"}% средняя уверенность</p>
+  <div style="margin-top:24px" id="domainAnswers"></div>`;
+  const list=c.querySelector("#domainAnswers");
+  if(!arr.length) list.innerHTML=`<div class="card muted">Эта область пока почти не исследована.</div>`;
+  arr.forEach(a=>{
+    const q=getQuestion(a.questionId);
+    const item=el("div","insight");
+    item.innerHTML=`<div class="it">${fmtDate(a.createdAt)}</div><div class="ib">${escapeHTML(a.text)}</div><div class="why">${escapeHTML(q.text)} · Confidence ${a.confidence}%</div>`;
+    list.append(item);
+  });
+  setTimeout(()=>document.querySelector(".back").onclick=()=>go("home"),0);
+  return appShell(c);
+}
+function timeline(){
+  const items=[...state.timeline].sort((a,b)=>new Date(b.date)-new Date(a.date));
+  const c=el("div");
+  c.innerHTML=`<button class="back">← SELF</button><div class="kicker">YOUR TIMELINE</div><h1 style="font-size:34px;margin-top:18px">${items.length?"Твоя история уже началась.":"Пока здесь пусто."}</h1><div class="timeline" id="tl"></div>`;
+  const tl=c.querySelector("#tl");
+  items.slice(0,30).forEach((item,i)=>{
+    const row=el("div","timeItem");
+    row.innerHTML=`<div class="markerWrap"><div class="marker" style="${item.type==="SHIFT"?"background:var(--blue)":""}"></div>${i<items.length-1?'<div class="tline"></div>':""}</div>
+      <div class="timeBody"><div class="date">${fmtDate(item.date)}</div><div class="title">${escapeHTML(item.title)}</div><div class="desc">${escapeHTML(item.desc||"")}</div></div>`;
+    tl.append(row);
+  });
+  setTimeout(()=>document.querySelector(".back").onclick=()=>go("home"),0);
+  return appShell(c);
+}
+function future(){
+  const c=el("div");c.style.display="flex";c.style.flexDirection="column";c.style.minHeight="100%";
+  c.innerHTML=`<button class="back">← SELF</button><div class="kicker">FUTURE ECHO</div>
+  <div class="qscene"><div class="qtitle">Что ты хочешь сказать себе, которого ещё не существует?</div>
+  <div class="qhint">Не совет. Не обещание. Просто мысль, которую важно не потерять.</div>
+  <textarea id="futureText" placeholder="Например: «Если ты это читаешь, надеюсь, ты всё-таки...»"></textarea>
+  <div class="futureChoices"><button class="futureChoice" data-days="30">1 month</button><button class="futureChoice" data-days="180">6 months</button><button class="futureChoice active" data-days="365">1 year</button></div></div>`;
+  const b=el("button","cta","Запечатать");b.onclick=()=>{
+    const txt=document.getElementById("futureText").value.trim();
+    const chosen=document.querySelector(".futureChoice.active");
+    if(!txt){showToast("Оставь сообщение.");return;}
+    const days=Number(chosen.dataset.days), unlock=new Date(Date.now()+days*86400000);
+    const futureRec={id:`f_${Date.now()}`,text:txt,createdAt:new Date().toISOString(),unlockAt:unlock.toISOString(),openedAt:null};
+    state.futureEchoes.push(futureRec); syncFutureEcho(futureRec);
+    state.timeline.unshift({id:`f_event_${Date.now()}`,type:"FUTURE",date:new Date().toISOString(),title:"Future Echo sealed",desc:`Откроется ${fmtDate(unlock)}`});
+    saveState();showToast("Future Echo запечатан.");setTimeout(()=>go("home"),500);
+  };c.append(b);
+  setTimeout(()=>{
+    document.querySelector(".back").onclick=()=>go("home");
+    document.querySelectorAll(".futureChoice").forEach(x=>x.onclick=()=>{document.querySelectorAll(".futureChoice").forEach(y=>y.classList.remove("active"));x.classList.add("active")});
+  },0);
+  return appShell(c);
+}
+function escapeHTML(str=""){return str.replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[m]));}
+
+function render(route,opts={}){
+  const root=document.getElementById("app"); root.innerHTML="";
+  let node;
+  switch(route){
+    case "auth":node=authScreen();break;
+    case "manifesto":node=manifesto();break;
+    case "privacy":node=privacy();break;
+    case "first":node=first();break;
+    case "birth":node=birth();break;
+    case "result":node=result();break;
+    case "home":node=home();break;
+    case "new-question":node=questionScreen(chooseNextQuestion());break;
+    case "revisit":node=revisit();break;
+    case "repeat":node=repeat(opts.id);break;
+    case "compare":node=compare(opts);break;
+    case "domain":node=domain(opts);break;
+    case "timeline":node=timeline();break;
+    case "future":node=future();break;
+    default:node=welcome();
+  }
+  root.append(node);
+}
+
+async function boot(){
+  const {data}=await sb.auth.getSession();
+  currentUser=data.session?.user||null;
+  const hash=location.hash.replace("#","")||"welcome";
+  if(hash!=="welcome" && hash!=="auth" && !currentUser){render("auth");return;}
+  if(currentUser) await prepareAccount();
+  render(hash);
+}
+sb.auth.onAuthStateChange((_event,session)=>{currentUser=session?.user||null;});
+boot();
+</script></body></html>
