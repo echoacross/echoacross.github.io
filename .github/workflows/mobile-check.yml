@@ -1,0 +1,65 @@
+name: ECHO mobile check
+on:
+  push:
+    branches: ['codex/echo-mobile-build']
+    paths: ['mobile/**', '.github/workflows/mobile-check.yml', 'index.html']
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: echo-mobile-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  android:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    defaults:
+      run:
+        working-directory: mobile
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+          cache: npm
+          cache-dependency-path: mobile/package-lock.json
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '21'
+      - uses: android-actions/setup-android@v3
+      - run: sdkmanager 'platforms;android-36' 'build-tools;36.0.0'
+      - run: npm ci
+      - run: npm run prepare:platforms
+      - run: npm test
+      - run: cd android && ./gradlew assembleDebug
+      - uses: actions/upload-artifact@v4
+        with:
+          name: ECHO-Android-debug
+          path: mobile/android/app/build/outputs/apk/debug/*.apk
+          retention-days: 7
+          if-no-files-found: error
+  ios:
+    runs-on: macos-26
+    timeout-minutes: 30
+    defaults:
+      run:
+        working-directory: mobile
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+          cache: npm
+          cache-dependency-path: mobile/package-lock.json
+      - run: npm ci
+      - run: npm run prepare:platforms
+      - run: npm test
+      - run: xcodebuild -project ios/App/App.xcodeproj -scheme App -configuration Debug -sdk iphonesimulator -destination 'generic/platform=iOS Simulator' -derivedDataPath ios-build CODE_SIGNING_ALLOWED=NO build
+      - run: cd ios-build/Build/Products/Debug-iphonesimulator && zip -r "$GITHUB_WORKSPACE/ECHO-iOS-simulator.zip" App.app
+      - uses: actions/upload-artifact@v4
+        with:
+          name: ECHO-iOS-simulator
+          path: ECHO-iOS-simulator.zip
+          retention-days: 7
+          if-no-files-found: error
