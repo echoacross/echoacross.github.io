@@ -1,4 +1,4 @@
-<!doctype html><html lang="ru"><head><meta charset="utf-8"><meta name="referrer" content="no-referrer"><meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-HbdQfxo7jdfKN1HV6uInKEHWfCXXokiP+9BJE7Xg0vI=' https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.117.2/dist/umd/supabase.js; style-src 'unsafe-inline'; img-src 'self' data:; font-src data:; connect-src 'self' https://aqrxvzobcswuurswzcvq.supabase.co wss://aqrxvzobcswuurswzcvq.supabase.co; base-uri 'none'; form-action 'self'; object-src 'none'"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#07080C"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><meta name="apple-mobile-web-app-title" content="ECHO"><title>ECHO</title><style>
+<!doctype html><html lang="ru"><head><meta charset="utf-8"><meta name="referrer" content="no-referrer"><meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-5b11oAw7RQwz8IJXjZAKO4uwTdK5dlYjIBunLU8CReE=' 'self'; style-src 'unsafe-inline'; img-src 'self' data:; font-src data:; connect-src 'self' https://aqrxvzobcswuurswzcvq.supabase.co wss://aqrxvzobcswuurswzcvq.supabase.co; base-uri 'none'; form-action 'self'; object-src 'none'; worker-src 'self'; manifest-src 'self'"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#07080C"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><meta name="apple-mobile-web-app-title" content="ECHO"><link rel="manifest" href="manifest.webmanifest"><link rel="apple-touch-icon" href="apple-touch-icon.png"><link rel="icon" type="image/png" href="icon-192.png"><title>ECHO</title><style>
 :root{
   --bg:#07080C;--bg2:#0E1018;--surface:#12141B;--text:#F5F2E9;--muted:#AAA7B3;
   --faint:#656877;--line:#242736;--violet:#B5A4FF;--blue:#8DB8FF;--green:#9DD7B1;
@@ -376,6 +376,8 @@ button:focus-visible{outline:2px solid #a8bad6;outline-offset:4px}
 .releaseLayout{max-width:600px;margin:auto;padding-bottom:40px}.releaseLayout h1{font-size:clamp(28px,8vw,40px);letter-spacing:-.035em;line-height:1.12;margin:28px 0 18px}.releaseLead{color:var(--muted);font-size:16px;line-height:1.6}.releaseLayout .accountRow{font-size:16px;padding:22px 0;text-align:left;width:100%;line-height:1.35}.releasePolicy{font-size:15px;line-height:1.65;color:var(--muted);padding:12px 0}.releasePolicy h2{font-size:17px;color:var(--text);margin:20px 0 8px}.releasePolicy p{margin:8px 0 16px}.releaseCheck{display:flex;align-items:flex-start;gap:12px;padding:18px 0;font-size:15px;line-height:1.5}.releaseCheck input{width:22px;min-width:22px;height:22px;margin:2px 0;accent-color:var(--violet)}.viewsDialogBody>input,.releaseLayout input{width:100%;padding:14px;border:1px solid var(--line);border-radius:14px;background:var(--surface);color:var(--text);font-size:16px;margin:8px 0}.viewsDialogBody ul{padding-left:22px;line-height:1.6;color:var(--muted)}.viewsDialogBody li{margin:10px 0}.releaseDanger{background:#e8b4b9!important;color:#281318!important}.releaseSupport{margin-top:28px}.releaseSupportLink{color:var(--violet);font-size:16px;display:block;padding:16px 0}.releaseCheckRow{display:flex;align-items:center;justify-content:space-between;gap:18px;border-bottom:1px solid var(--line);padding:20px 0;font-size:15px;line-height:1.5}.releaseCheckRow b{font-size:12px;max-width:100px;text-align:right;font-weight:500}.releaseOK{color:#a8d5b9}.releasePending{color:#d8bd8e}#releaseRecheck{margin-top:24px}.releaseCase{padding:20px 0;border-bottom:1px solid var(--line)}.releaseEvidence{white-space:pre-wrap;overflow-wrap:anywhere;line-height:1.6}.releaseCase label{color:var(--muted);font-size:14px}.releaseCaseActions{display:flex;flex-wrap:wrap;gap:8px 20px}.releaseLayout textarea,.releaseCase textarea{font-size:16px;max-width:100%}.releaseLayout .quietDetails summary{min-height:52px;padding:18px 0;line-height:1.4}.releaseLayout .quietDetails{border-bottom:1px solid var(--line);margin:0}.releaseLayout a.cta{display:flex;justify-content:center;text-decoration:none}#exportReady a{display:flex;justify-content:center;text-decoration:none}.viewsDialog{max-height:calc(100dvh - 36px);overflow:auto;overscroll-behavior:contain}.viewsDialog input[type=password]{font-size:16px}.selfScreen button:focus-visible,.accountLayout button:focus-visible,.selfDialog button:focus-visible{outline:2px solid var(--violet);outline-offset:4px}.selfScreen .quietTextButton,.selfScreen .back,.chatReport{min-height:44px}.chatBubble p{overflow-wrap:anywhere}.accountEmail{overflow-wrap:anywhere}.echoTyping .selfNav{display:none}.echoTyping .withSelfNav{padding-bottom:24px}.selfScreen textarea{scroll-margin-bottom:24px}@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important;scroll-behavior:auto!important}}@media(max-width:350px){.releaseCheckRow{gap:10px;font-size:14px}.releaseLayout h1{font-size:29px}.releaseCheckRow b{max-width:84px}.selfNavLabel{font-size:9px}}
 .releaseLayout h1{font-weight:500}
 
+
+.echoConnection{position:fixed;top:calc(env(safe-area-inset-top) + 4px);left:50%;transform:translateX(-50%);max-width:94%;width:max-content;padding:7px 12px;border:1px solid #484239;border-radius:12px;background:#171716;color:#d9bb98;font-size:11px;z-index:110;pointer-events:none}.echoInstallDialog{width:calc(100% - 36px);max-width:390px;border:1px solid #30323f;border-radius:24px;background:#101117;color:#f5f2e9;padding:24px;box-sizing:border-box}.echoInstallDialog::backdrop{background:#000a}.echoInstallDialog h2{font-size:26px}.echoInstallDialog p{font-size:15px;line-height:1.65;color:#b9bac7;margin:18px 0 24px}.echoInstallDialog .quietTextButton{display:block;margin:20px auto 0;min-height:44px}.echoInstallDialog [hidden]{display:none!important}
 </style><!-- Inter font license
 Copyright (c) 2016 The Inter Project Authors (https://github.com/rsms/inter)
 
@@ -471,8 +473,8 @@ FROM, OUT OF THE USE OR INABILITY TO USE THE FONT SOFTWARE OR FROM
 OTHER DEALINGS IN THE FONT SOFTWARE.
 
 -->
-</head><body><div id="app"></div><div id="toast" class="toast"></div><script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.117.2/dist/umd/supabase.js" integrity="sha384-Rj26LVGvoeRVR6+mwQmFfcR3QOBEwT+ZmuCWpuiqeTzJpCs0ER4ITAWGb4Hiy3Ok" crossorigin="anonymous"></script><script>
-const APP_VERSION = "0.22.0";
+</head><body><div id="app"></div><div id="toast" class="toast"></div><script src="supabase.js" integrity="sha384-Rj26LVGvoeRVR6+mwQmFfcR3QOBEwT+ZmuCWpuiqeTzJpCs0ER4ITAWGb4Hiy3Ok" crossorigin="anonymous"></script><script>
+const APP_VERSION = "0.24.0";
 const SUPABASE_URL = "https://aqrxvzobcswuurswzcvq.supabase.co";
 const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImFxcnh2em9iY3N3dXVyc3d6Y3ZxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTAwMzQzMzcsImV4cCI6MjEwNTYxMDMzN30.ZizSy1RUgu5zL6FjB5eEP4Dd6rMAYCaoi3jmLvHfkgs";
 const sb = window.supabase?.createClient(SUPABASE_URL, SUPABASE_ANON_KEY) || null;
@@ -2466,7 +2468,7 @@ function render(route,opts={}){
     node.classList.add('withSelfNav');node.append(selfNavigation(route));
   }
   if(!['welcome','auth','loading','reset-password','account','manifesto','what-echo','privacy','first-intro'].includes(route))quietScreen(node,route);
-  root.append(node);refreshSyncStatus();mountNotices();mountRelease();
+  root.append(node);refreshSyncStatus();mountNotices();mountRelease();mountEchoPWA();
 }
 
 async function enterAccount(session,preferred){
@@ -2539,6 +2541,57 @@ window.addEventListener("pagehide",()=>{if(currentUser)saveState();});
 window.addEventListener("hashchange",()=>{
   if(!booting&&!authBusy)go(location.hash.slice(1)||"welcome");
 });
+// ECHO web installation, connection state and deliberate updates.
+let echoInstallPrompt = null, echoRegistration = null, echoReloadRequested = false;
+const echoStandalone = () => navigator.standalone === true || matchMedia('(display-mode: standalone)').matches;
+function echoConnectionStatus(){
+  let bar = document.getElementById('echoConnection');
+  if(navigator.onLine){bar?.remove();return;}
+  if(!bar){bar=el('div','echoConnection');bar.id='echoConnection';bar.setAttribute('role','status');bar.setAttribute('aria-live','polite');document.body.append(bar);}
+  bar.textContent=currentUser ? (localSaveOK?'Нет интернета · облачное сохранение недоступно':'Нет интернета · копия не сохранена'):'Нет интернета';
+}
+function echoInstall(){
+  document.querySelector('#echoInstallDialog')?.remove();
+  const d=el('dialog','echoInstallDialog');d.id='echoInstallDialog';d.setAttribute('aria-labelledby','echoInstallTitle');
+  const ios=/iPhone|iPad|iPod/.test(navigator.userAgent)||(navigator.platform==='MacIntel'&&navigator.maxTouchPoints>1);
+  d.innerHTML='<h2 id="echoInstallTitle">ECHO на телефоне</h2><p></p><button class="cta selfPrimary" id="echoInstallAction" type="button"></button><button class="quietTextButton" id="echoInstallClose" type="button">Закрыть</button>';
+  const p=d.querySelector('p'),b=d.querySelector('#echoInstallAction');
+  if(echoStandalone()){p.textContent='ECHO уже открыто как приложение.';b.hidden=true;}
+  else if(echoInstallPrompt){p.textContent='Добавь ECHO на главный экран — открывай одним касанием.';b.textContent='Установить ECHO';b.onclick=async()=>{const prompt=echoInstallPrompt;echoInstallPrompt=null;b.disabled=true;try{await prompt.prompt();await prompt.userChoice;}catch{p.textContent='Открой меню браузера и выбери «Установить приложение».';}finally{b.hidden=true;}};}
+  else {p.textContent=ios?'Открой этот сайт в Safari. Нажми «Поделиться» → «На экран Домой». Если есть «Открывать как веб-приложение», включи его. Затем нажми «Добавить».':'Открой меню браузера → «Установить приложение» или «Добавить на главный экран».';b.hidden=true;}
+  d.querySelector('#echoInstallClose').onclick=()=>d.close();d.addEventListener('close',()=>d.remove());d.addEventListener('click',e=>{if(e.target===d){const r=d.getBoundingClientRect();if(e.clientX<r.left||e.clientX>r.right||e.clientY<r.top||e.clientY>r.bottom)d.close();}});
+  document.body.append(d);d.showModal();
+}
+function mountEchoPWA(){
+  echoConnectionStatus();
+  if(activeRoute!=='account'||window.EchoNative)return;
+  const anchor=document.querySelector('.signOutArea');if(!anchor)return;
+  if(!document.getElementById('echoInstallRow')){const b=releaseLink(echoStandalone()?'Установка ECHO':'Установить ECHO',echoInstall);b.id='echoInstallRow';anchor.before(b);}
+  document.getElementById('echoUpdateRow')?.remove();
+  if(echoRegistration?.waiting){
+    const b=releaseLink('Обновление готово',async()=>{
+      if(authBusy||pendingCount()||!localSaveOK){showToast('Сначала проверь сохранение в аккаунте.');return;}
+      // Only this account screen reloads; other open tabs keep their current answer.
+      const ready=echoRegistration.waiting;if(!ready)return;
+      if(!saveState()){showToast('Не удалось сохранить копию. Обновление отложено.');return;}
+      b.disabled=true;echoReloadRequested=true;ready.postMessage({type:'ECHO_APPLY_UPDATE'});
+    });b.id='echoUpdateRow';anchor.before(b);
+  }
+}
+window.addEventListener('beforeinstallprompt',event=>{event.preventDefault();echoInstallPrompt=event;});
+window.addEventListener('appinstalled',()=>{echoInstallPrompt=null;mountEchoPWA();});
+window.addEventListener('online',echoConnectionStatus);window.addEventListener('offline',echoConnectionStatus);
+if('serviceWorker' in navigator && location.protocol==='https:' && !window.Capacitor){
+  navigator.serviceWorker.addEventListener('controllerchange',()=>{if(echoReloadRequested){echoReloadRequested=false;location.reload();}});
+  window.addEventListener('load',async()=>{
+    try{
+      echoRegistration=await navigator.serviceWorker.register('./sw.js',{updateViaCache:'none'});
+      mountEchoPWA();
+      echoRegistration.addEventListener('updatefound',()=>{const worker=echoRegistration.installing;worker?.addEventListener('statechange',()=>{if(worker.state==='installed')mountEchoPWA();});});
+    }catch{/* Installation is optional; the online website remains usable. */}
+  });
+}
+
 boot();
 
 </script></body></html>
