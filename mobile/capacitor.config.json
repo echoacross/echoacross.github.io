@@ -1,0 +1,1 @@
+{"appId":"io.echoacross.app","appName":"ECHO","webDir":"www","server":{"androidScheme":"https"},"plugins":{"LocalNotifications":{"presentationOptions":["banner","list"]}}}

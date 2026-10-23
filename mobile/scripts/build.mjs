@@ -1,0 +1,18 @@
+import fs from 'node:fs';
+import crypto from 'node:crypto';
+import {build} from 'esbuild';
+let html=fs.readFileSync('../index.html','utf8');
+const replace=(a,b)=>{if(!html.includes(a))throw new Error('Source marker missing: '+a.slice(0,50));html=html.replace(a,b);};
+replace('function authRedirectURL(){return new URL(".",location.href).href;}','function authRedirectURL(){return "https://echoacross.github.io/";}');
+replace('  currentUser=user;\n  accountEpoch++;','  currentUser=user;\n  accountEpoch++;\n  window.EchoNative?.accountChanged();');
+replace('case "account":node=accountScreen();break;','case "account":node=accountScreen();if(window.EchoNative){const b=el("button","quietTextButton","Напоминания");b.onclick=()=>window.EchoNative.settings();node.append(b);}break;');
+replace("const link=el('a','cta selfPrimary','Сохранить файл');link.href=url;link.download=file.name;b.querySelector('#exportReady').append(link);", "const link=el(window.EchoNative?'button':'a','cta selfPrimary','Сохранить файл');if(window.EchoNative){link.onclick=async()=>{link.disabled=true;try{await window.EchoNative.share(file);}catch{showToast('Не удалось открыть меню сохранения.');}finally{link.disabled=false;}};}else{link.href=url;link.download=file.name;}b.querySelector('#exportReady').append(link);");
+const last=html.lastIndexOf('</script>');html=html.slice(0,last)+'\nwindow.EchoApp={owner:()=>currentUser?.id||null,home:()=>go(currentUser?"home":"auth")};\n'+html.slice(last);
+html=html.replace(/<script src="https:\/\/cdn.jsdelivr.net[^>]*><\/script>/,'<script src="supabase.js"></script>');
+const inline=[...html.matchAll(/<script(?: [^>]*)?>([\s\S]*?)<\/script>/g)].map(m=>m[1]).filter(Boolean);
+const hashes=inline.map(s=>"'sha256-"+crypto.createHash('sha256').update(s).digest('base64')+"'");
+html=html.replace(/script-src [^;]+;/,'script-src '+hashes.join(' ')+" 'self';");
+html=html.replace('</body>','<script src="native.js"></script></body>');
+fs.mkdirSync('www',{recursive:true});fs.writeFileSync('www/index.html',html);fs.copyFileSync('vendor/supabase.js','www/supabase.js');
+await build({entryPoints:['src/native.js'],bundle:true,outfile:'www/native.js',format:'iife',minify:true});
+console.log('Bundled native UI, local SDK, CSP hashes.');
